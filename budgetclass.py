@@ -4,18 +4,23 @@ class Budget:
 
     def __init__(self, name):
         self.name = name
+        self.path = Path.cwd()
         self.__readBalance()
         
     def __readBalance(self):
-        p = Path(self.name + '.txt')
+        p = self.path / 'budgetfiles' / (self.name + '.txt')
         if p.exists():
-            with open(p, 'r') as f:
+            with p.open('r') as f:
                 self.balance = float(f.read())
         else:
             self.balance = 0.0
 
     def __writeBalance(self):
-        p = Path(self.name + '.txt')
+        folder = self.path / 'budgetfiles'
+        if not folder.exists():
+            folder.mkdir()
+
+        p = folder / (self.name + '.txt')
         with open(p, 'w') as f:
             f.write(str(self.balance))
     
@@ -29,6 +34,10 @@ class Budget:
         else:
             self.balance -= amount
             self.__writeBalance()
+
+#    def summary():
+
+
 
 
 
