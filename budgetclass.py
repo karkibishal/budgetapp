@@ -1,14 +1,14 @@
 from pathlib import Path
+folderpath = Path.cwd() / 'budgetfiles'
 
 class Budget:
 
     def __init__(self, name):
         self.name = name
-        self.path = Path.cwd()
         self.__readBalance()
         
     def __readBalance(self):
-        p = self.path / 'budgetfiles' / (self.name + '.txt')
+        p = folderpath / (self.name + '.txt')
         if p.exists():
             with p.open('r') as f:
                 self.balance = float(f.read())
@@ -16,12 +16,11 @@ class Budget:
             self.balance = 0.0
 
     def __writeBalance(self):
-        folder = self.path / 'budgetfiles'
-        if not folder.exists():
-            folder.mkdir()
+        if not folderpath.exists():
+            folderpath.mkdir()
 
-        p = folder / (self.name + '.txt')
-        with open(p, 'w') as f:
+        p = folderpath / (self.name + '.txt')
+        with p.open('w') as f:
             f.write(str(self.balance))
     
     def deposit(self, amount):
@@ -35,10 +34,8 @@ class Budget:
             self.balance -= amount
             self.__writeBalance()
 
-#    def summary():
-
-
-
-
-
-    
+    def summary():
+        for file in folderpath.iterdir():
+            print(file.stem + ':')
+            with file.open('r') as f:
+                print(f.read() + '\n')
