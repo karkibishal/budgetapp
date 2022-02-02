@@ -1,7 +1,7 @@
 from budgetclass import Budget
 
 run = True
-main_menu = "Please select an option:\n" + \
+main_menu = "\nPlease select an option:\n" + \
             "1. Deposit\n" + \
             "2. Withdraw\n" + \
             "3. Transfer\n" + \
@@ -15,7 +15,7 @@ while run:
         run = False
 
     elif main_selection == 1:
-        print("Please select an existing item or add a new one:\n"+
+        print("\nPlease select an existing item or add a new one:\n"+
                 "0. Return to main menu")
         count = 1
         budget_items, budget_balance = Budget.summary()
@@ -34,6 +34,7 @@ while run:
             amount = float(input("Enter amount: "))
             new_budget_obj = Budget(new_item)
             new_budget_obj.deposit(amount)
+            print(f"\n£{amount} deposited to {new_item}\n")
         else:
             for i in range(count):
                 if selection == i+1:
@@ -41,9 +42,10 @@ while run:
                     amount = float(input("Enter amount: "))
                     temp_budget_obj = Budget(budget_items[i])
                     temp_budget_obj.deposit(amount)
+                    print(f"\n£{amount} deposited to {budget_items[i]}\n")
 
     elif main_selection == 2:
-        print("Please select an item:\n"+
+        print("\nPlease select an item:\n"+
                 "0. Return to main menu")
         count = 1
         budget_items, budget_balance = Budget.summary()
@@ -63,6 +65,7 @@ while run:
                     amount = float(input("Enter amount: "))
                     temp_budget_obj = Budget(budget_items[i])
                     temp_budget_obj.withdraw(amount)
+                    print(f"\n£{amount} withdrawn from {budget_items[i]}\n")
 
     
     elif main_selection == 3:
@@ -91,12 +94,12 @@ while run:
         destination.deposit(amount)
         source.withdraw(amount)
 
-        print(f"£{amount} was trasferred from {source.name} to {destination.name}")
+        print(f"£{amount} was trasferred from {source.name} to {destination.name}\n")
 
     elif main_selection == 4:
         budget_items, budget_balance = Budget.summary()
-        for item, balance in budget_items, budget_balance:
-            print(f"{item}: {balance}\n")
+        for item, balance in zip(budget_items, budget_balance):
+            print(f"{item}: £{balance}")
 
 
 
