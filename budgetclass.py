@@ -35,7 +35,11 @@ class Budget:
             self.__writeBalance()
 
     def summary():
+        budget_items = []
+        budget_balance = []
         for file in folderpath.iterdir():
-            print(file.stem + ':')
+            budget_items.append(file.stem)
             with file.open('r') as f:
-                print(f.read() + '\n')
+                budget_balance.append(f.read())
+
+        return budget_items, budget_balance
